@@ -15,6 +15,8 @@ Examples
 --------
 
 $('p').linkify();
+
 $('.toLink').linkify();
+
 $('#myid').linkify();
 
