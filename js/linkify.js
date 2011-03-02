@@ -1,22 +1,56 @@
-/*
 (function($) {
-    $.fn.linkify = function() {
+  function replaceSubstitutions(str, array) {
 
-        function _linkify(s) {
+    for (var i = 0; i < array.length; i++) {
+      str = str.replace('{' + i + '}', array[i]);
+    }
 
-            var re = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-            var url = re.exec(s);
+    return str;
+  }
 
-            return s = url ? s = s.replace(re, '<a href="' + url[0] + '" target="_new">' + url[0] + '</a>') : s;
-            
-        }
 
-        $(this).html(_linkify(this.html()));
+  $.fn.linkify = function() {
 
-        return this;
-    };
+    function _linkify(s) {
+
+      var re = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/im;
+      var match, replacements = [],i = 0;
+      while (match = re.exec(s)) {
+        replacements.push('<a href="' + match[0] + '" target="_new">' + match[0] + '</a>');
+        s = s.replace(re, '{' + i + '}');
+        i++;
+      }
+
+      return i > 0 ? replaceSubstitutions(s, replacements) : s;
+    }
+
+    $(this).html(_linkify(this.html()));
+
+    return this;
+  };
+
+  $.fn.hashify = function() {
+
+    function _hashify(s) {
+
+      var re = /\B#(\w*[A-Za-z_]+\w*)/im;
+      var match, replacements = [],i = 0;
+      while (match = re.exec(s)) {
+        replacements.push('<a href="http://twitter.com/#search?q=' + escape(match[0]) + '" target="_new">' + match[0] + '</a>');
+        s = s.replace(re, '{' + i + '}');
+        i++;
+      }
+
+      console.log(s);
+      return i > 0 ? replaceSubstitutions(s, replacements) : s;
+
+    }
+
+    $(this).html(_hashify(this.html()));
+
+    return this;
+  };
+
+
 })(jQuery);
-*/
 
-(function($){$.fn.linkify=function(){function _linkify(s){var re=/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;var url=re.exec(s);return s=url?s=s.replace(re,'<a href="'+url[0]+'" target="_new">'+url[0]+'</a>'):s;}
-$(this).html(_linkify(this.html()));return this;};})(jQuery);
