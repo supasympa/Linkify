@@ -41,7 +41,6 @@
         i++;
       }
 
-      console.log(s);
       return i > 0 ? replaceSubstitutions(s, replacements) : s;
 
     }
