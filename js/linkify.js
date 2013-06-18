@@ -36,7 +36,7 @@
       var re = /\B#(\w*[A-Za-z_]+\w*)/im;
       var match, replacements = [],i = 0;
       while (match = re.exec(s)) {
-        replacements.push('<a href="http://twitter.com/#search?q=' + escape(match[0]) + '" target="_new">' + match[0] + '</a>');
+        replacements.push('<a href="http://twitter.com/search?q=' + escape(match[0]) + '" target="_new">' + match[0] + '</a>');
         s = s.replace(re, '{' + i + '}');
         i++;
       }
